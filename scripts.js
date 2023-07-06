@@ -1,7 +1,7 @@
-let operand1,
-	operand2,
-	operator1,
-	operator2,
+let firstOperand,
+	secondOperand,
+	firstOperator,
+	secondOperator,
 	result = null;
 let displayValue = "0";
 
@@ -11,6 +11,7 @@ const clear = document.querySelector(".clear");
 const sign = document.querySelector(".sign");
 const percent = document.querySelector(".percent");
 const equals = document.querySelector(".equals");
+const display = document.querySelector("#display");
 
 operands.forEach((operand) => {
 	operand.addEventListener("click", (e) => {
@@ -22,13 +23,35 @@ operators.forEach((operator) => {
 		operatorClicked(e.target.value);
 	});
 });
-clear.addEventListener("click", (e) => {
-	operand1 = null;
-	operand2 = null;
-	operator1 = null;
-	operator2 = null;
+clear.addEventListener("click", () => {
+	firstOperand = null;
+	secondOperand = null;
+	firstOperator = null;
+	secondOperator = null;
 	result = null;
 	displayValue = "0";
+	updateScreen(displayValue);
+});
+sign.addEventListener("click", () => {
+	if (displayValue.includes("-")) {
+		displayValue = displayValue.slice(1);
+		updateScreen(displayValue);
+	} else {
+		displayValue = `-${displayValue}`;
+		updateScreen(displayValue);
+	}
+});
+percent.addEventListener("click", () => {
+	displayValue = displayValue / 100;
+	updateScreen(displayValue);
+});
+equals.addEventListener("click", () => {
+	displayValue = operate(firstOperator, firstOperand, secondOperand);
+	firstOperand = displayValue;
+	// firstOperator = null;
+	// secondOperand = null;
+	updateScreen(displayValue);
+	console.log(displayValue);
 });
 
 function operate(operator, num1, num2) {
@@ -43,15 +66,49 @@ function operate(operator, num1, num2) {
 
 function updateScreen(value) {
 	displayValue = value;
+	display.innerHTML = displayValue;
 }
 
 function operandClicked(operand) {
-	console.log(operand);
+	if (!firstOperand) {
+		updateScreen(operand);
+		firstOperand = displayValue;
+	} else if (firstOperand && firstOperator && !secondOperand) {
+		updateScreen(operand);
+		secondOperand = displayValue;
+	} else if (firstOperand && firstOperator && secondOperator) {
+		updateScreen(operand);
+		firstOperand = displayValue;
+		firstOperator = secondOperator;
+		secondOperator = null;
+	} else {
+		displayValue += operand;
+		updateScreen(displayValue);
+	}
+	console.log(`
+    firstOperand: ${firstOperand}
+    firstOperator: ${firstOperator}
+    secondOperand: ${secondOperand}
+    secondOperator: ${secondOperator}`);
 	return;
 }
 
 function operatorClicked(operator) {
-	console.log(operator);
+	if (firstOperand && !firstOperator) {
+		firstOperator = operator;
+	} else if (firstOperand && firstOperator) {
+		if (secondOperand) {
+			equals.click();
+		}
+		if (firstOperator !== operator) {
+			secondOperator = operator;
+		}
+	}
+	console.log(`
+    firstOperand: ${firstOperand}
+    firstOperator: ${firstOperator}
+    secondOperand: ${secondOperand}
+    secondOperator: ${secondOperator}`);
 	return;
 }
 
