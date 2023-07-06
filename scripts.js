@@ -52,10 +52,18 @@ equals.addEventListener("click", () => {
 		firstOperand = displayValue;
 		return;
 	}
-
+	if (!secondOperator) {
+		displayValue = operate(firstOperator, firstOperand, secondOperand);
+		updateScreen(displayValue);
+		firstOperand = displayValue;
+		secondOperand = null;
+		firstOperator = null;
+		return;
+	}
 	displayValue = operate(firstOperator, firstOperand, secondOperand);
 	updateScreen(displayValue);
 	firstOperand = displayValue;
+	firstOperator = null;
 	secondOperand = null;
 
 	console.log(`
@@ -70,12 +78,20 @@ function operate(operator, num1, num2) {
 		"+": (x, y) => Number(x) + Number(y),
 		"-": (x, y) => Number(x) - Number(y),
 		"*": (x, y) => Number(x) * Number(y),
-		"/": (x, y) => Number(x) / Number(y),
+		"/": (x, y) => {
+			if (y === "0") {
+				return "😾😾😾";
+			}
+			return Number(x) / Number(y);
+		},
 	};
 	return operators[operator](num1, num2);
 }
 
 function updateScreen(value) {
+	if (value.length > 9) {
+		value = roundValue(value);
+	}
 	displayValue = value;
 	display.innerHTML = displayValue;
 }
@@ -112,22 +128,14 @@ function operandClicked(operand) {
 }
 
 function operatorClicked(operator) {
-	if (firstOperand && !firstOperator) {
+	if (!firstOperator) {
 		firstOperator = operator;
-	} else if (firstOperand && firstOperator) {
-		if (!secondOperand) {
-			secondOperand = displayValue;
-		} else {
-			// displayValue = operate(operator, firstOperand, secondOperand);
-			// updateScreen(displayValue);
-			// firstOperand = displayValue;
-			// secondOperator = operator;
-			equals.click();
-		}
-		// if (firstOperator !== operator) {
-		// 	secondOperator = operator;
-		// }
+		secondOperator = null;
+		return;
 	}
+	equals.click();
+	firstOperator = operator;
+
 	console.log(`
     firstOperand: ${firstOperand}
     firstOperator: ${firstOperator}
@@ -136,27 +144,6 @@ function operatorClicked(operator) {
 	return;
 }
 
-// store all values (operand1-2, operator, displayValue)
-// event handler to get operand1-2 and operator1.
-
-// operand clicked (operand):
-//      if operand1 === null
-//          displayValue = operand
-//
-//      else operand1 !== null && operator1 !== null:
-//
-//
-// operator clicked (operator):
-//      if operator1 === null and operator2 === null:
-//          operator1 = operator
-//          operand1 = displayValue
-//
-//
-//      if operator2 === operator1 and operands are populated, calculate again
-//      if operator 2 !== operator 1,
-// if new operator clicked is same as last, calculate again
-// function to get keystrokes and click buttons accordingly
-// handle when displayValue is longer than display can show?
-//
-// function to calculate and return result
-// update display with reuslt
+function roundValue(value) {
+	return Number.parseFloat(value).toExponential(2).toString();
+}
