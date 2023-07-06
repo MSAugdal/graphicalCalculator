@@ -1,1 +1,1 @@
-#Graphical calulator (The Odin Project)
+# Graphical calulator (The Odin Project)
