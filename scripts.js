@@ -52,6 +52,7 @@ equals.addEventListener("click", () => {
 		firstOperand = displayValue;
 		return;
 	}
+
 	displayValue = operate(firstOperator, firstOperand, secondOperand);
 	updateScreen(displayValue);
 	firstOperand = displayValue;
@@ -81,20 +82,27 @@ function updateScreen(value) {
 
 function operandClicked(operand) {
 	if (!firstOperand) {
-		updateScreen(operand);
+		displayValue = operand;
+		updateScreen(displayValue);
 		firstOperand = displayValue;
-	} else if (firstOperator && !secondOperand) {
-		updateScreen(operand);
-		secondOperand = displayValue;
-	} else if (firstOperator && secondOperator) {
-		updateScreen(operand);
-		firstOperand = displayValue;
-		firstOperator = secondOperator;
-		secondOperator = null;
-	} else {
+		return;
+	}
+	if (!firstOperator) {
 		displayValue += operand;
 		updateScreen(displayValue);
+		firstOperand = displayValue;
+		return;
 	}
+	if (!secondOperand) {
+		displayValue = operand;
+		updateScreen(displayValue);
+		secondOperand = displayValue;
+		return;
+	}
+	displayValue += operand;
+	updateScreen(displayValue);
+	secondOperand = displayValue;
+
 	console.log(`
     firstOperand: ${firstOperand}
     firstOperator: ${firstOperator}
