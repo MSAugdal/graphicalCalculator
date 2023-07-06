@@ -4,111 +4,80 @@
 	font-family: "Roboto", sans-serif;
 	font-size: xx-large;
 	font-weight: 500;
+	color: var(--calc_text);
+	border: 0;
+	border-radius: 8px;
 }
 html,
 body {
 	width: 100vw;
 	height: 100vh;
+	background-color: #fde8b5;
 }
 
 :root {
 	--calc_background: #000000;
-	--calc_text: #f5f5f6;
-	--operators: hsl(34, 79%, 57%);
-	--nums: hsl(0, 0%, 19%);
+	--calc_text: #ffffff;
+	--operators: hsl(35, 100%, 50%);
+	--operators_hover: hsl(35, 100%, 60%);
+	--nums: hsl(0, 0%, 20%);
 	--nums_hover: hsl(0, 0%, 30%);
-	--operators_hover: hsl(34, 79%, 68%);
+	--specials: hsl(0, 0%, 63%);
+	--specials_hover: hsl(0, 0%, 73%);
+	--equals: #367ee2;
 }
 
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.container {
-	background-color: var(--calc_background);
-	width: 25%;
-	height: 75%;
-	border-radius: 25px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-	box-shadow: 0px 0px 4px var(--calc_background);
-}
-.buttons {
-	width: 100%;
-	height: 60%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	flex-direction: row;
-}
-
-.nums {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	width: 65%;
-	height: 100%;
-}
-.num {
-	cursor: pointer;
+button {
+	width: 64px;
+	height: 64px;
 	background-color: var(--nums);
-	border-radius: 12px;
-	width: 80px;
-	height: 80px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	color: var(--calc_text);
 }
-.num:hover {
+button:hover {
 	background-color: var(--nums_hover);
 }
-#clear {
-	cursor: pointer;
-	background-color: var(--nums);
-	border-radius: 12px;
-	width: 80px;
-	height: 80px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: var(--calc_text);
-}
-#clear:hover {
-	background-color: var(--nums_hover);
-}
-
-.operators {
-	width: 20%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	height: 94%;
-	gap: 1rem;
-}
-.operator {
+.operator,
+.equals {
 	background-color: var(--operators);
 }
-.num.operator:hover {
+.operator:hover,
+.equals:hover {
 	background-color: var(--operators_hover);
 }
-
-.display {
-	text-align: right;
-	color: var(--calc_text);
-	height: 5%;
-	width: 100%;
+#zero {
+	width: 132px;
 }
-.display p {
-	width: 95%;
-	font-size: 2.2rem;
+.clear,
+.sign,
+.percent {
+	background-color: var(--specials);
+	color: var(--calc_background);
+}
+.clear:hover,
+.sign:hover,
+.percent:hover {
+	background-color: var(--specials_hover);
+}
+
+#display {
+	width: 100%;
+	text-align: right;
+}
+#calc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+#container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	width: 268px;
+	background-color: var(--calc_background);
+	padding: 8px;
+}
+
+.operatorClicked {
+	background-color: hsl(0, 0%, 84%);
 }
