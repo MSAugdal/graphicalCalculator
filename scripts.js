@@ -1,8 +1,7 @@
 let firstOperand,
 	secondOperand,
 	firstOperator,
-	secondOperator,
-	result = null;
+	secondOperator = null;
 let displayValue = "0";
 
 const operands = document.querySelectorAll(".operand");
@@ -28,7 +27,6 @@ clear.addEventListener("click", () => {
 	secondOperand = null;
 	firstOperator = null;
 	secondOperator = null;
-	result = null;
 	displayValue = "0";
 	updateScreen(displayValue);
 });
@@ -46,12 +44,24 @@ percent.addEventListener("click", () => {
 	updateScreen(displayValue);
 });
 equals.addEventListener("click", () => {
+	if (!firstOperand) return;
+	if (!firstOperator) return;
+	if (!secondOperand) {
+		displayValue = operate(firstOperator, firstOperand, firstOperand);
+		updateScreen(displayValue);
+		firstOperand = displayValue;
+		return;
+	}
 	displayValue = operate(firstOperator, firstOperand, secondOperand);
-	firstOperand = displayValue;
-	// firstOperator = null;
-	// secondOperand = null;
 	updateScreen(displayValue);
-	console.log(displayValue);
+	firstOperand = displayValue;
+	secondOperand = null;
+
+	console.log(`
+    firstOperand: ${firstOperand}
+    firstOperator: ${firstOperator}
+    secondOperand: ${secondOperand}
+    secondOperator: ${secondOperator}`);
 });
 
 function operate(operator, num1, num2) {
@@ -73,10 +83,10 @@ function operandClicked(operand) {
 	if (!firstOperand) {
 		updateScreen(operand);
 		firstOperand = displayValue;
-	} else if (firstOperand && firstOperator && !secondOperand) {
+	} else if (firstOperator && !secondOperand) {
 		updateScreen(operand);
 		secondOperand = displayValue;
-	} else if (firstOperand && firstOperator && secondOperator) {
+	} else if (firstOperator && secondOperator) {
 		updateScreen(operand);
 		firstOperand = displayValue;
 		firstOperator = secondOperator;
@@ -97,12 +107,18 @@ function operatorClicked(operator) {
 	if (firstOperand && !firstOperator) {
 		firstOperator = operator;
 	} else if (firstOperand && firstOperator) {
-		if (secondOperand) {
+		if (!secondOperand) {
+			secondOperand = displayValue;
+		} else {
+			// displayValue = operate(operator, firstOperand, secondOperand);
+			// updateScreen(displayValue);
+			// firstOperand = displayValue;
+			// secondOperator = operator;
 			equals.click();
 		}
-		if (firstOperator !== operator) {
-			secondOperator = operator;
-		}
+		// if (firstOperator !== operator) {
+		// 	secondOperator = operator;
+		// }
 	}
 	console.log(`
     firstOperand: ${firstOperand}
