@@ -11,6 +11,7 @@ const sign = document.querySelector(".sign");
 const percent = document.querySelector(".percent");
 const equals = document.querySelector(".equals");
 const display = document.querySelector("#display");
+const dot = document.querySelector(".dot");
 
 operands.forEach((operand) => {
 	operand.addEventListener("click", (e) => {
@@ -65,6 +66,12 @@ equals.addEventListener("click", () => {
 	firstOperand = displayValue;
 	firstOperator = null;
 	secondOperand = null;
+});
+dot.addEventListener("click", () => {
+	if (!displayValue.includes(".")) {
+		displayValue += ".";
+		updateScreen(displayValue);
+	}
 });
 
 function operate(operator, num1, num2) {
