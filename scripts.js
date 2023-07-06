@@ -41,7 +41,7 @@ sign.addEventListener("click", () => {
 	}
 });
 percent.addEventListener("click", () => {
-	displayValue = displayValue / 100;
+	displayValue = parseFloat(displayValue / 100).toFixed(2);
 	updateScreen(displayValue);
 });
 equals.addEventListener("click", () => {
