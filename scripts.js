@@ -128,7 +128,6 @@ function operatorClicked(operator) {
 		secondOperator = null;
 		return;
 	}
-	equals.click();
 	firstOperator = operator;
 	return;
 }
