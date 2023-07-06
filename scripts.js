@@ -65,12 +65,6 @@ equals.addEventListener("click", () => {
 	firstOperand = displayValue;
 	firstOperator = null;
 	secondOperand = null;
-
-	console.log(`
-    firstOperand: ${firstOperand}
-    firstOperator: ${firstOperator}
-    secondOperand: ${secondOperand}
-    secondOperator: ${secondOperator}`);
 });
 
 function operate(operator, num1, num2) {
@@ -118,12 +112,6 @@ function operandClicked(operand) {
 	displayValue += operand;
 	updateScreen(displayValue);
 	secondOperand = displayValue;
-
-	console.log(`
-    firstOperand: ${firstOperand}
-    firstOperator: ${firstOperator}
-    secondOperand: ${secondOperand}
-    secondOperator: ${secondOperator}`);
 	return;
 }
 
@@ -135,12 +123,6 @@ function operatorClicked(operator) {
 	}
 	equals.click();
 	firstOperator = operator;
-
-	console.log(`
-    firstOperand: ${firstOperand}
-    firstOperator: ${firstOperator}
-    secondOperand: ${secondOperand}
-    secondOperator: ${secondOperator}`);
 	return;
 }
 
