@@ -41,6 +41,8 @@ sign.addEventListener("click", () => {
 	}
 });
 percent.addEventListener("click", () => {
+	if (!secondOperand && firstOperand === displayValue) firstOperand = parseFloat(displayValue / 100).toFixed(2);
+	else secondOperand = parseFloat(displayValue / 100).toFixed(2);
 	displayValue = parseFloat(displayValue / 100).toFixed(2);
 	updateScreen(displayValue);
 });
@@ -86,7 +88,8 @@ function operate(operator, num1, num2) {
 			return Number(x) / Number(y);
 		},
 	};
-	return operators[operator](num1, num2);
+	output = operators[operator](num1, num2);
+	return typeof output === "float" ? output.toFixed(2) : output;
 }
 
 function updateScreen(value) {
